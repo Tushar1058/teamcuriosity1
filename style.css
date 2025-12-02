@@ -1,0 +1,834 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #ffffff;
+  background-color: #000000;
+  overflow-x: hidden;
+  overflow-y: hidden; /* keep everything in one screen */
+}
+
+.page-background {
+  position: fixed;
+  inset: 0;
+  background: url("background.webp") center / cover no-repeat;
+  filter: brightness(0.75);
+  z-index: -1;
+}
+
+.page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1.5rem;
+}
+
+.hero {
+  display: flex;
+  gap: 3rem;
+  max-width: 1200px;
+  width: 100%;
+  align-items: center;
+  height: 100%;
+}
+
+.hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.device-frame {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 9 / 16;
+  border-radius: 1.5rem;
+  border: 3px solid rgba(92, 92, 92, 0.8);
+  background: #000000;
+  overflow: visible; /* allow arrows to sit outside the frame */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.device-screen {
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem 0.4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  background: #000000;
+}
+
+.carousel {
+  position: relative;
+  flex: 1;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(5%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.carousel-slide img,
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+.video-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.video-wrapper iframe {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.carousel-dot.active {
+  width: 0.9rem;
+  background: #ffffff;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.1s ease;
+  z-index: 5;
+}
+
+.carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.03);
+}
+
+.arrow-left {
+  left: -3rem;
+}
+
+.arrow-right {
+  right: -3rem;
+}
+
+.caption-box {
+  max-width: 420px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.hero-right {
+  flex: 1.15;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.9rem;
+}
+
+.wishlist-card {
+  background: transparent;
+  color: #000000;
+  border-radius: 1rem;
+  padding: 0;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.wishlist-header {
+  background: linear-gradient(to bottom, #ffffff, #a1a1a1);
+  border-radius: 0.8rem 0.8rem 0 0;
+  padding: 0.7rem 1rem;
+  text-align: center;
+}
+
+.wishlist-header h1 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.wishlist-body {
+  margin-top: 0;
+  padding: 1rem 1.5rem 1.3rem;
+  background: rgba(5, 9, 25, 0.9);
+  border-radius: 0 0 1rem 1rem;
+  backdrop-filter: blur(18px);
+  color: #f9fafb;
+}
+
+.wishlist-platforms {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.platform-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.75rem;
+  border: none;
+  background: #111827;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+}
+
+.platform-button:hover {
+  background: #111827;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+}
+
+.platform-button.disabled {
+  opacity: 0.7;
+  cursor: default;
+  box-shadow: none;
+}
+
+.platform-button.app-store,
+.platform-button.google-play {
+  background: #dde1ea;
+  color: #111827;
+}
+
+.platform-button.steam {
+  background: #ffffff;
+  color: #111827;
+}
+
+.platform-logo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.platform-button.app-store .platform-logo,
+.platform-button.google-play .platform-logo {
+  background: #dde1ea;
+  color: #111827;
+}
+
+.platform-button.steam .platform-logo {
+  background: #ffffff;
+  color: #111827;
+}
+
+.platform-button:not(.app-store):not(.google-play):not(.steam) .platform-logo {
+  background: rgba(15, 23, 42, 0.9);
+  color: #ffffff;
+}
+
+.platform-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.65rem;
+}
+
+.platform-name {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.wishlist-note {
+  font-size: 0.78rem;
+  line-height: 1.3;
+  text-align: center;
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+.cta-row {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+}
+
+.cta-button {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.8rem;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.cta-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.cta-button.faq {
+  background: #1e293b;
+}
+
+.cta-button.faq:hover {
+  background: #020617;
+}
+
+.cta-button.share {
+  background: #4f46e5;
+}
+
+.cta-button.share:hover {
+  background: #4338ca;
+}
+
+.cta-icon {
+  font-size: 1rem;
+}
+
+.cta-text-mobile {
+  display: none;
+}
+
+.cta-text-full {
+  display: inline;
+}
+
+/* Responsive layout */
+
+@media (max-width: 960px) {
+  .page {
+    padding-inline: 1rem;
+    align-items: center;
+  }
+
+  .hero {
+    flex-direction: column;
+    gap: 1.2rem;
+    height: 100%;
+  }
+
+  /* hide right caption so only one description on mobile */
+  .caption-box-top {
+    display: none;
+  }
+
+  .arrow-left {
+    left: -2.8rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: grey;
+  }
+
+  .arrow-right {
+    right: -2.8rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: grey;
+  }
+
+  .device-frame {
+    max-width: 220px;
+  }
+
+  .hero-left {
+    gap: 0.5rem;
+  }
+
+  .caption-box {
+    font-size: 0.8rem;
+    padding: 0.7rem 1rem;
+    max-width: 100%;
+  }
+
+  .wishlist-card {
+    margin-top: 0.5rem;
+  }
+
+  .wishlist-platforms {
+    gap: 0.5rem;
+  }
+
+  .platform-button {
+    height: auto;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.7rem;
+    align-items: center;
+  }
+
+  .platform-logo {
+    width: 1.7rem;
+    height: 1.7rem;
+    font-size: 1rem;
+  }
+
+  .platform-text {
+    font-size: 0.6rem;
+    line-height: 1.2;
+  }
+
+  .platform-label {
+    font-size: 0.55rem;
+  }
+
+  .platform-name {
+    font-size: 0.7rem;
+  }
+
+  .wishlist-note {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cta-row {
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .cta-button {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.8rem;
+    height: auto;
+    min-height: 2.2rem;
+  }
+
+  .cta-icon {
+    font-size: 0.85rem;
+  }
+
+  .cta-text-full {
+    display: none;
+  }
+
+  .cta-text-mobile {
+    display: inline;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .hero {
+    gap: 0.8rem;
+  }
+
+  .hero-right {
+    width: 100%;
+  }
+
+  .wishlist-card {
+    padding-inline: 0;
+  }
+
+  .wishlist-body {
+    padding: 0.9rem 1.2rem 1rem;
+  }
+
+  .wishlist-card {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .wishlist-platforms {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .platform-button {
+    flex: 1;
+    min-width: 0;
+    padding: 0.45rem 0.4rem;
+    height: auto;
+    min-height: 2.3rem;
+    align-items: center;
+  }
+
+  .platform-button.app-store,
+  .platform-button.google-play {
+    flex: 1.15;
+  }
+
+  .platform-button.steam {
+    flex: 0.85;
+  }
+
+  .platform-logo {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .platform-text {
+    font-size: 0.55rem;
+    line-height: 1.15;
+  }
+
+  .platform-label {
+    font-size: 0.5rem;
+  }
+
+  .platform-name {
+    font-size: 0.65rem;
+  }
+
+  .wishlist-note {
+    font-size: 0.65rem;
+    line-height: 1.25;
+  }
+
+  .cta-row {
+    gap: 0.5rem;
+  }
+
+  .cta-button {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+    height: auto;
+    min-height: 2rem;
+  }
+
+  .cta-icon {
+    font-size: 0.8rem;
+  }
+
+  .cta-text-full {
+    display: none;
+  }
+
+  .cta-text-mobile {
+    display: inline;
+  }
+
+  .arrow-left,
+  .arrow-right {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* FAQ Modal Overlay */
+.faq-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.faq-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.faq-modal {
+  background: rgba(10, 10, 15, 0.6);
+  border-radius: 1.5rem;
+  max-width: 1500px;
+  width: 100%;
+  max-height: 100vh;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.faq-overlay.active .faq-modal {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.faq-header {
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 2.5rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+.faq-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  z-index: 10;
+}
+
+.faq-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.faq-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin: 0;
+}
+
+.faq-content-wrapper {
+  overflow-y: auto;
+  padding: 2rem 2.5rem 2.5rem;
+  flex: 1;
+}
+
+.faq-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.faq-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.faq-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-question {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.faq-answer {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.faq-answer a {
+  color: #3b82f6;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.faq-answer a:hover {
+  color: #60a5fa;
+}
+
+/* Mobile Responsive FAQ */
+@media (max-width: 960px) {
+  .faq-overlay {
+    padding: 1rem;
+  }
+
+  .faq-modal {
+    max-height: 95vh;
+    border-radius: 1rem;
+  }
+
+  .faq-header {
+    padding: 2rem 1.5rem 1rem;
+  }
+
+  .faq-close {
+    top: 1rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .faq-title {
+    font-size: 1.5rem;
+  }
+
+  .faq-content-wrapper {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+
+  .faq-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .faq-column {
+    gap: 1.5rem;
+  }
+
+  .faq-item {
+    gap: 0.6rem;
+  }
+
+  .faq-question {
+    font-size: 1rem;
+  }
+
+  .faq-answer {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .faq-overlay {
+    padding: 0.5rem;
+  }
+
+  .faq-modal {
+    border-radius: 0.75rem;
+  }
+
+  .faq-header {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .faq-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 1rem;
+  }
+
+  .faq-title {
+    font-size: 1.25rem;
+  }
+
+  .faq-content-wrapper {
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .faq-content {
+    gap: 1.25rem;
+  }
+
+  .faq-column {
+    gap: 1.25rem;
+  }
+
+  .faq-question {
+    font-size: 0.95rem;
+  }
+
+  .faq-answer {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+}
+
+
